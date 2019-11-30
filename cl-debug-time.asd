@@ -7,7 +7,7 @@
                "local-time")
   :components ((:module "src"
                 :components
-                ((:file "main"))))
+                ((:file "cl-debug-time"))))
   :description "time measurement library for performance bug"
   :in-order-to ((test-op (test-op "cl-debug-time/tests"))))
 
@@ -18,6 +18,6 @@
                "rove")
   :components ((:module "tests"
                 :components
-                ((:file "main"))))
+                ((:file "cl-debug-time"))))
   :description "Test system for cl-debug-time"
   :perform (test-op (op c) (symbol-call :rove :run c)))
