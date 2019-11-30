@@ -6,8 +6,6 @@
                 #:enable-annot-syntax))
 (in-package :cl-debug-time/tests/main)
 
-;; NOTE: To run this test file, execute `(asdf:test-system :cl-debug-time)' in your Lisp.
-
 (enable-annot-syntax)
 
 (deftest test-target-1
@@ -22,7 +20,7 @@
     (testing "should (= 1 1) to be true"
       (ok (= 1 1))))
 
-  (testing "microsecond"
+  (testing "millisecond"
     @measure-time :ms
     (testing "should (= 1 1) to be true"
       (ok (= 1 1)))
