@@ -10,12 +10,19 @@
   (:export :measure-time))
 (in-package :cl-debug-time)
 
-(defannotation measure-time (body)
-  (:inline t)
+(defannotation measure-time (unit body)
+  (:arity 2 :inline t)
   (with-gensyms (start end)
-    `(let ((,start (now)))
-       (unwind-protect (progn ,body)
-         (let ((,end (now)))
-           (format *trace-output*
-                   "~,3f [ms]~%"
-                   (* 1000.0 (timestamp-difference ,end ,start))))))))
+    (let ((mul (ecase unit
+                 ((or :h :hour) 0.000001)
+                 ((or :m :min :minute) 0.001)
+                 ((or :s :sec :second) 1.0)
+                 ((or :ms :msec :millisecond) 1000.0)
+                 ((or :us :usec :microsecond) 1000000.0))))
+      `(let ((,start (now)))
+         (unwind-protect (progn ,body)
+           (let ((,end (now)))
+             (format *trace-output*
+                     "~,3f [~a]~%"
+                     (* ,mul (timestamp-difference ,end ,start))
+                     ,(string-downcase unit))))))))
