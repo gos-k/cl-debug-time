@@ -9,7 +9,7 @@ If you add an annotation before a code with performance bug, you can get the exe
 2. execute enable-annot-syntax
 3. add annotation to target code
 
-```
+```lisp
 (defpackage dummy-package
   (:use :cl)
   (:import-from #:cl-annot
