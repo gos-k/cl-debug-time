@@ -1,12 +1,14 @@
 (defpackage cl-debug-time/tests/main
   (:use :cl
         :cl-debug-time
-        :rove))
+        :rove)
+  (:import-from #:cl-annot
+                #:enable-annot-syntax))
 (in-package :cl-debug-time/tests/main)
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :cl-debug-time)' in your Lisp.
 
-(annot:enable-annot-syntax)
+(enable-annot-syntax)
 
 (deftest test-target-1
   (testing "second"
@@ -30,7 +32,7 @@
     @measure-time :millisecond
     (testing "should (= 1 1) to be true"
       (ok (= 1 1))))
-  
+
   (testing "microsecond"
     @measure-time :us
     (testing "should (= 1 1) to be true"
