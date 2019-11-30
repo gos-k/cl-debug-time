@@ -9,6 +9,30 @@
 (enable-annot-syntax)
 
 (deftest test-target-1
+  (testing "hour"
+    @measure-time :h
+    (testing "should (= 1 1) to be true"
+      (sleep 3.6)
+      (ok (= 1 1)))
+    @measure-time :hour
+    (testing "should (= 1 1) to be true"
+      (sleep 3.6)
+      (ok (= 1 1))))
+
+  (testing "minute"
+    @measure-time :m
+    (testing "should (= 1 1) to be true"
+      (sleep 3)
+      (ok (= 1 1)))
+    @measure-time :min
+    (testing "should (= 1 1) to be true"
+      (sleep 3)
+      (ok (= 1 1)))
+    @measure-time :minute
+    (testing "should (= 1 1) to be true"
+      (sleep 3)
+      (ok (= 1 1))))
+
   (testing "second"
     @measure-time :s
     (testing "should (= 1 1) to be true"
