@@ -6,8 +6,10 @@
                 #:defannotation)
   (:import-from #:local-time
                 #:now
-                #:timestamp-difference)
-  (:export :measure-time))
+                #:timestamp-difference
+                #:format-timestring)
+  (:export :measure-time
+           :timestamp))
 (in-package :cl-debug-time)
 
 (defun %second-per-unit (unit)
@@ -29,3 +31,31 @@
                    (* ,(%second-per-unit unit)
                       (timestamp-difference ,end ,start))
                    ,(string-downcase unit)))))))
+
+(defun %unit-format (unit)
+  (ecase unit
+    ((or :h :hour)
+     '((:hour 2)))
+    ((or :m :min :minute)
+     '((:hour 2) #\: (:min 2)))
+    ((or :s :sec :second)
+     '((:hour 2) #\: (:min 2) #\: (:sec 2)))
+    ((or :ms :msec :millisecond)
+     '((:hour 2) #\: (:min 2) #\: (:sec 2) #\. (:msec 3)))
+    ((or :us :usec :microsecond)
+     '((:hour 2) #\: (:min 2) #\: (:sec 2) #\. (:usec 6)))))
+
+(defannotation timestamp (unit message body)
+  (:arity 3 :inline t)
+  (with-gensyms (start end)
+    `(let ((,start (now)))
+       (format *trace-output*
+                   "~a ~a start~%"
+                   (format-timestring nil ,start :format ',(%unit-format unit))
+                   ,message)
+       (unwind-protect (progn ,body)
+         (let ((,end (now)))
+           (format *trace-output*
+                   "~a ~a end~%"
+                   (format-timestring nil ,end :format ',(%unit-format unit))
+                   ,message))))))

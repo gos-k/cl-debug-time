@@ -8,7 +8,7 @@
 
 (enable-annot-syntax)
 
-(deftest test-target-1
+(deftest test-measure-time
   (testing "hour"
     @measure-time :h
     (testing "should (= 1 1) to be true"
@@ -63,5 +63,63 @@
     (testing "should (= 1 1) to be true"
       (ok (= 1 1)))
     @measure-time :microsecond
+    (testing "should (= 1 1) to be true"
+      (ok (= 1 1)))))
+
+(deftest test-timestamp
+  (testing "hour"
+    @timestamp :h "h"
+    (testing "should (= 1 1) to be true"
+      (sleep 3.6)
+      (ok (= 1 1)))
+    @timestamp :hour "hour"
+    (testing "should (= 1 1) to be true"
+      (sleep 3.6)
+      (ok (= 1 1))))
+
+  (testing "minute"
+    @timestamp :m "m"
+    (testing "should (= 1 1) to be true"
+      (sleep 3)
+      (ok (= 1 1)))
+    @timestamp :min "min"
+    (testing "should (= 1 1) to be true"
+      (sleep 3)
+      (ok (= 1 1)))
+    @timestamp :minute "minute"
+    (testing "should (= 1 1) to be true"
+      (sleep 3)
+      (ok (= 1 1))))
+
+  (testing "second"
+    @timestamp :s "s"
+    (testing "should (= 1 1) to be true"
+      (ok (= 1 1)))
+    @timestamp :sec "sec"
+    (testing "should (= 1 1) to be true"
+      (ok (= 1 1)))
+    @timestamp :second "second"
+    (testing "should (= 1 1) to be true"
+      (ok (= 1 1))))
+
+  (testing "millisecond"
+    @timestamp :ms "ms"
+    (testing "should (= 1 1) to be true"
+      (ok (= 1 1)))
+    @timestamp :msec "msec"
+    (testing "should (= 1 1) to be true"
+      (ok (= 1 1)))
+    @timestamp :millisecond "millisecond"
+    (testing "should (= 1 1) to be true"
+      (ok (= 1 1))))
+
+  (testing "microsecond"
+    @timestamp :us "us"
+    (testing "should (= 1 1) to be true"
+      (ok (= 1 1)))
+    @timestamp :usec "usec"
+    (testing "should (= 1 1) to be true"
+      (ok (= 1 1)))
+    @timestamp :microsecond "microsecond"
     (testing "should (= 1 1) to be true"
       (ok (= 1 1)))))
