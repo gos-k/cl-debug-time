@@ -20,17 +20,26 @@
     ((or :ms :msec :millisecond) 1000.0)
     ((or :us :usec :microsecond) 1000000.0)))
 
-(defannotation measure-time (unit body)
+(defannotation measure-time (args body)
   (:arity 2 :inline t)
-  (with-gensyms (start end)
+  (with-gensyms (start end message unit)
     `(let ((,start (now)))
        (unwind-protect (progn ,body)
          (let ((,end (now)))
-           (format *trace-output*
-                   "~,3f [~a]~%"
-                   (* ,(%second-per-unit unit)
-                      (timestamp-difference ,end ,start))
-                   ,(string-downcase unit)))))))
+           ,(etypecase args
+              (keyword `(format *trace-output*
+                                "~,3f [~a]~%"
+                                (* ,(%second-per-unit args)
+                                   (timestamp-difference ,end ,start))
+                                ,(string-downcase args)))
+              (list `(let ((,message ,(first args))
+                           (,unit ,(second args)))
+                       (format *trace-output*
+                               "~a ~,3f [~a]~%"
+                               ,message
+                               (* ,`(%second-per-unit ,unit)
+                                  (timestamp-difference ,end ,start))
+                               ,`(string-downcase ,unit))))))))))
 
 (defun %unit-format (unit)
   (ecase unit
