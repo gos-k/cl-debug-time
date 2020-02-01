@@ -7,7 +7,8 @@
                "local-time")
   :components ((:module "src"
                 :components
-                ((:file "cl-debug-time"))))
+                ((:file "cl-debug-time")
+                 (:file "annotation"))))
   :description "time measurement library for performance bug"
   :in-order-to ((test-op (test-op "cl-debug-time/tests"))))
 

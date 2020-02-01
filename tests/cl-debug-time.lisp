@@ -8,6 +8,14 @@
 
 (enable-annot-syntax)
 
+(deftest with-measure-time-test
+  (with-measure-time :h
+    (ok (= 1 1))))
+
+(deftest with-timestamp-test
+  (with-timestamp :h "h"
+    (ok (= 1 1))))
+
 (deftest test-measure-time
   (testing "hour"
     @measure-time :h

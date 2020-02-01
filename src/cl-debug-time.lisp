@@ -8,8 +8,8 @@
                 #:now
                 #:timestamp-difference
                 #:format-timestring)
-  (:export :measure-time
-           :timestamp))
+  (:export :with-measure-time
+           :with-timestamp))
 (in-package :cl-debug-time)
 
 (defun %second-per-unit (unit)
@@ -20,11 +20,10 @@
     ((or :ms :msec :millisecond) 1000.0)
     ((or :us :usec :microsecond) 1000000.0)))
 
-(defannotation measure-time (args body)
-  (:arity 2 :inline t)
+(defmacro with-measure-time (args &body body)
   (with-gensyms (start end message unit)
     `(let ((,start (now)))
-       (unwind-protect (progn ,body)
+       (unwind-protect (progn ,@body)
          (let ((,end (now)))
            ,(etypecase args
               (keyword `(format *trace-output*
@@ -54,15 +53,14 @@
     ((or :us :usec :microsecond)
      '((:hour 2) #\: (:min 2) #\: (:sec 2) #\. (:usec 6)))))
 
-(defannotation timestamp (unit message body)
-  (:arity 3 :inline t)
+(defmacro with-timestamp (unit message &body body)
   (with-gensyms (start end)
     `(let ((,start (now)))
        (format *trace-output*
                    "~a ~a start~%"
                    (format-timestring nil ,start :format ',(%unit-format unit))
                    ,message)
-       (unwind-protect (progn ,body)
+       (unwind-protect (progn ,@body)
          (let ((,end (now)))
            (format *trace-output*
                    "~a ~a end~%"
