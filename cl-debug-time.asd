@@ -2,8 +2,7 @@
   :version "0.1.0"
   :author "gos-k"
   :license "MIT"
-  :depends-on ("alexandria"
-               "cl-annot"
+  :depends-on ("cl-annot"
                "local-time")
   :components ((:module "src"
                 :components

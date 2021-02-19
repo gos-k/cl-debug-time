@@ -1,7 +1,5 @@
 (defpackage cl-debug-time
   (:use :cl)
-  (:import-from #:alexandria
-                #:with-gensyms)
   (:import-from #:cl-annot
                 #:defannotation)
   (:import-from #:local-time
@@ -21,7 +19,10 @@
     ((or :us :usec :microsecond) 1000000.0)))
 
 (defmacro with-measure-time (args &body body)
-  (with-gensyms (start end message unit)
+  (let ((start (gensym))
+        (end (gensym))
+        (message (gensym))
+        (unit (gensym)))
     `(let ((,start (now)))
        (unwind-protect (progn ,@body)
          (let ((,end (now)))
@@ -54,7 +55,8 @@
      '((:hour 2) #\: (:min 2) #\: (:sec 2) #\. (:usec 6)))))
 
 (defmacro with-timestamp (unit message &body body)
-  (with-gensyms (start end)
+  (let ((start (gensym))
+        (end (gensym)))
     `(let ((,start (now)))
        (format *trace-output*
                    "~a ~a start~%"
