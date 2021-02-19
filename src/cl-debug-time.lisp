@@ -7,7 +7,9 @@
                 #:timestamp-difference
                 #:format-timestring)
   (:export :with-measure-time
-           :with-timestamp))
+           :with-timestamp
+           :measure-time
+           :timestamp))
 (in-package :cl-debug-time)
 
 (defun %second-per-unit (unit)
@@ -68,3 +70,13 @@
                    "~a ~a end~%"
                    (format-timestring nil ,end :format ',(%unit-format unit))
                    ,message))))))
+
+(defannotation measure-time (args body)
+  (:arity 2 :inline t)
+  `(with-measure-time ,args
+     ,body))
+
+(defannotation timestamp (unit message body)
+  (:arity 3 :inline t)
+  `(with-timestamp ,unit ,message
+     ,body))
