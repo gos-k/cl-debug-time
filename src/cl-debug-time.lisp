@@ -12,11 +12,11 @@
 
 (defun %second-per-unit (unit)
   (ecase unit
-    ((or :h :hour) (/ 1.0 3600.0))
-    ((or :m :min :minute) (/ 1.0 60.0))
-    ((or :s :sec :second) 1.0)
-    ((or :ms :msec :millisecond) 1000.0)
-    ((or :us :usec :microsecond) 1000000.0)))
+    ((:h :hour) (/ 1.0 3600.0))
+    ((:m :min :minute) (/ 1.0 60.0))
+    ((:s :sec :second) 1.0)
+    ((:ms :msec :millisecond) 1000.0)
+    ((:us :usec :microsecond) 1000000.0)))
 
 (defmacro with-measure-time (args &body body)
   (let ((start (gensym))
@@ -43,15 +43,15 @@
 
 (defun %unit-format (unit)
   (ecase unit
-    ((or :h :hour)
+    ((:h :hour)
      '((:hour 2)))
-    ((or :m :min :minute)
+    ((:m :min :minute)
      '((:hour 2) #\: (:min 2)))
-    ((or :s :sec :second)
+    ((:s :sec :second)
      '((:hour 2) #\: (:min 2) #\: (:sec 2)))
-    ((or :ms :msec :millisecond)
+    ((:ms :msec :millisecond)
      '((:hour 2) #\: (:min 2) #\: (:sec 2) #\. (:msec 3)))
-    ((or :us :usec :microsecond)
+    ((:us :usec :microsecond)
      '((:hour 2) #\: (:min 2) #\: (:sec 2) #\. (:usec 6)))))
 
 (defmacro with-timestamp (unit message &body body)
