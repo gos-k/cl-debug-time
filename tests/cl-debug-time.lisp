@@ -1,12 +1,10 @@
 (defpackage cl-debug-time/tests/main
   (:use :cl
         :cl-debug-time
-        :rove)
-  (:import-from #:cl-annot
-                #:enable-annot-syntax))
+        :rove))
 (in-package :cl-debug-time/tests/main)
 
-(enable-annot-syntax)
+(enable-annotation)
 
 (deftest with-measure-time-test
   (with-measure-time :h

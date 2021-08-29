@@ -5,17 +5,16 @@ If you add an annotation before a code with performance bug, you can get the exe
 
 ## Usage
 
-1. import cl-annot and cl-debug-time
-2. execute enable-annot-syntax
+1. import cl-debug-time
+2. execute enable-annotation
 3. add annotation to target code
 
 ```lisp
 (defpackage dummy-package
   (:use :cl)
-  (:import-from #:cl-annot
-                #:enable-annot-syntax)
   (:import-from #:cl-debug-time
-                #:measure-time))
+                #:measure-time
+                #:enable-annotation))
 (in-package :dummy-package)
 
 (enable-annot-syntax)

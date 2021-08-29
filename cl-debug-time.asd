@@ -2,8 +2,7 @@
   :version "0.1.0"
   :author "gos-k"
   :license "MIT"
-  :depends-on ("cl-annot"
-               "local-time")
+  :depends-on ("local-time")
   :components ((:module "src"
                 :components
                 ((:file "cl-debug-time"))))
