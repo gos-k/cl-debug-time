@@ -17,7 +17,7 @@ If you add an annotation before a code with performance bug, you can get the exe
                 #:enable-annotation))
 (in-package :dummy-package)
 
-(enable-annot-syntax)
+(enable-annotation)
 
 (defun dummy-function (x y)
   @measure-time :us
